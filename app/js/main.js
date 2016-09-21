@@ -4,7 +4,52 @@ define(function (require, exports, module) {
     var Transform = require('samsara/core/Transform');
     var Surface = require('samsara/dom/Surface');
     var ContainerSurface = require('samsara/dom/ContainerSurface');
+    var nlp=require('./nlp_compromise');
 
+    function translate(text)
+    {
+        var terms=nlp.text(text).terms();
+        var subject=(terms[0].tag=='Person'||terms[0].tag=='Noun')&&terms[0].normal!='i'?terms[0].text:'';
+        var verb=null;
+        var tensePhrase='';
+        var theRest='';
+
+        for (var i = 0; i < terms.length; i++) {
+            var term = terms[i];
+            if(verb!=null)
+            {
+                theRest+=' '+term.text;
+            }
+            if(term.pos.Verb&&verb==null)
+            {
+                verb=term.text;
+                tensePhrase=term.tag;
+            }
+            
+        }
+        console.log(verb);
+        console.log(nlp.verb(verb).root());
+        verb=nlp.verb(verb).root()+'ing';
+        
+        switch(tensePhrase)
+        {
+            case 'PastTense':
+                tensePhrase='Wasing ';
+                break;
+            case 'Infinitive':
+                tensePhrase='Ising ';
+                break;
+            case 'FutureTense':
+                tensePhrase='Willing ';
+                break;
+        }
+        if(subject!='')
+        {
+            subject=' of the '+subject;
+        }
+        verb=' of the '+verb;
+        return tensePhrase+subject+verb+theRest;
+    }
 
     var headerHeight=100;
     var header=new Surface({
@@ -51,7 +96,9 @@ define(function (require, exports, module) {
         }
     });
     translateButton.on('click',function(){
-        highImperialSurface.setContent(textBox.value);
+        var english=textBox.value;
+        console.log(nlp.text(english).terms());
+        highImperialSurface.setContent(translate(english));
     });
 
     // Create a Samsara Context as the root of the render tree

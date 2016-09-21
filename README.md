@@ -23,3 +23,6 @@ To package the project for distribution, run
 grunt
 ```
 everything will be outputted into the 'dist' directory, ready for deployment to a web server.
+
+##Credits
+Uses nlp_compromise to parse English
