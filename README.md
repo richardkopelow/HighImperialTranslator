@@ -26,3 +26,6 @@ everything will be outputted into the 'dist' directory, ready for deployment to 
 
 ##Credits
 Uses nlp_compromise to parse English
+
+##License
+MIT
