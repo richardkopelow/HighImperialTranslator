@@ -1,0 +1,23 @@
+{
+  "name": "HighImperialTranslator",
+  "description": ".",
+  "main": "app/index.html",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "samsara"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "js/lib"
+  ],
+  "dependencies": {
+    "requirejs": "~2.2.0",
+    "samsarajs": ">=0.2.1",
+    "almond": "0.3.0"
+  }
+}
