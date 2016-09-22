@@ -29,10 +29,10 @@ define(function (require, exports, module) {
 
     function translate(text)
     {
-        var punctuation=nlp.sentence(text).terminator;
+        var punctuation=nlp.sentence(text).terminator();
         if(text.charAt(text.length-1)==punctuation)
         {
-            text=text.substr(text.length-1);
+            text=text.substring(0, text.length-1);
         }
         var terms=nlp.text(text).terms();
         var subject=null;//;nlp.text(text).nouns()[0];//(terms[0].tag=='Person'||terms[0].tag=='Noun')&&terms[0].normal!='i'?terms[0].text:'';
