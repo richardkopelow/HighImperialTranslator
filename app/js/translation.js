@@ -29,6 +29,11 @@ define(function (require, exports, module) {
 
     function translate(text)
     {
+        var punctuation=nlp.sentence(text).terminator;
+        if(text.charAt(text.length-1)==punctuation)
+        {
+            text=text.substr(text.length-1);
+        }
         var terms=nlp.text(text).terms();
         var subject=null;//;nlp.text(text).nouns()[0];//(terms[0].tag=='Person'||terms[0].tag=='Noun')&&terms[0].normal!='i'?terms[0].text:'';
         var verb=null;
@@ -41,22 +46,7 @@ define(function (require, exports, module) {
             {
                 if(theRest!=''||!term.pos.Preposition)
                 {
-                    if(term.tag=='Adjective'||term.tag=='Adverb')
-                    {
-                        if(i+1<terms.length)
-                        {
-                            theRest+=' '+terms[i+1].text+createPadding()+term.text;
-                            i++;
-                        }
-                        else
-                        {
-                            theRest+=createPadding()+term.text;
-                        }
-                    }
-                    else
-                    {
-                        theRest+=' '+term.text;
-                    }
+                    theRest+=' '+term.text;
                 }
             }
             if(term.pos.Noun&&subject==null)
@@ -65,7 +55,12 @@ define(function (require, exports, module) {
                 subject=subject.normal=='i'?'':subject.text;
                 if(i-1>-1&&(terms[i-1].tag=='Adjective'||terms[i-1].tag=='Adverb'))
                 {
-                    subject+=createPadding(true,subject!='',false)+terms[i-1].text;
+                    var padding='of ';
+                    if (subject!='')
+                    {
+                        padding=' '+padding;
+                    }
+                    subject+=padding+terms[i-1].text;
                 }
             }
             else
@@ -81,7 +76,10 @@ define(function (require, exports, module) {
                         {
                             verb=split[split.length-1];
                             tensePhrase=term.normal.includes('was')?'PastTense':
+                                        term.normal.includes('were')?'PastTense':
                                         term.normal.includes('am')?'Infinitive':
+                                        term.normal.includes('are')?'Infinitive':
+                                        term.normal.includes('is')?'Infinitive':
                                         'FutureTense'
                         }
                     }
