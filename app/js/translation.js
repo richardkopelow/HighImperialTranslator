@@ -115,7 +115,7 @@ define(function (require, exports, module) {
         if (theRest!='') {
             theRest=createPadding(false)+theRest;
         }
-        return tensePhrase+subject+verb+theRest;
+        return tensePhrase+subject+verb+theRest+punctuation;
     }
 
     module.exports = translate;

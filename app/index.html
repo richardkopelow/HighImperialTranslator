@@ -8,6 +8,12 @@
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <link rel="icon" type="image/png" href="assets/favicon.png"/>
 
+        <meta property="og:url"           content="http://highimperialtranslator.com" />
+        <meta property="og:type"          content="website" />
+        <meta property="og:title"         content="High Imperial Translator" />
+        <meta property="og:description"   content="A tool to translate English to High Imperial/Eastern Street Slang from the Mistborn series." />
+        <meta property="og:image"         content="http://highimperialtranslator.com/assets/favicon.png" />
+
         
         <!-- build:css(app/) css/samsara.css -->
         <link rel="stylesheet" type="text/css" href="lib/samsarajs/samsara/samsara.css" />
@@ -27,6 +33,17 @@
         <script type="text/javascript" src="lib/requirejs/require.js" data-main="js/requireConfig"></script>
         <!-- /process -->
 
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=369729462743";
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
     </head>
-    <body></body>
+    <body>
+        <div class="fb-like" data-href="http://highimperialtranslator.com/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+    </body>
 </html>

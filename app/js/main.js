@@ -21,6 +21,12 @@ define(function (require, exports, module) {
             paddingLeft:'30px'
         }
     });
+    var facebookDiv=document.getElementsByClassName('fb-like')[0];
+    var facebookSurface=new Surface({
+        size: [120,20],
+        origin: [1,0.5],
+        content: facebookDiv
+    });
 
     var content=new View();
 
@@ -102,6 +108,13 @@ define(function (require, exports, module) {
 
     context
         .add(layout);
+    
+    context
+        .add({
+            align:[1,0],
+            transform: Transform.translate([0,headerHeight/2,0])
+        })
+        .add(facebookSurface);
 
     
 
