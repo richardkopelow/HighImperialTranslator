@@ -92,7 +92,6 @@ define(function (require, exports, module) {
         }
         var isGerund=nlp.verb(verb).conjugation()=='Gerund';
         var conjugations=nlp.verb(verb).conjugate();
-        console.log(conjugations);
         verb=isGerund?conjugations['infinitive']:conjugations['gerund'];
         
         switch(tensePhrase)
@@ -100,6 +99,8 @@ define(function (require, exports, module) {
             case 'PastTense':
                 tensePhrase='Wasing ';
                 break;
+            case 'PresentTense':
+            case 'Gerund':
             case 'Infinitive':
                 tensePhrase='Ising ';
                 break;
