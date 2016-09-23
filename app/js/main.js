@@ -113,7 +113,7 @@ define(function (require, exports, module) {
         'NLP done with <a href="https://github.com/nlp-compromise/nlp_compromise">nlp_compromise</a><br>',
         'Layout powered by <a href="http://samsarajs.org/">SamsaraJS</a><br>',
         'Base project generated with <a href="https://github.com/richardkopelow/generator-samsara">generator-samsara</a><br>',
-        'This is made by a fan made site, if you haven\'t read Mistborn by Brandon Sanderson you should.'
+        'This is a fan made site, if you haven\'t read Mistborn by Brandon Sanderson you should'
     ];
     var detailTransitions=[];
     for (var i = 0; i < details.length; i++) {
