@@ -8,6 +8,9 @@ define(function (require, exports, module) {
     var HeaderFooterLayout = require('samsara/layouts/HeaderFooterLayout');
     var translate = require('./translation');
 
+    // Create a Samsara Context as the root of the render tree
+    var context = new Context();
+
     var headerHeight=100;
     var footerHeight=150;
     var headerOpacity=new Transitionable(0);
@@ -102,14 +105,44 @@ define(function (require, exports, module) {
         .add({transform:Transform.translate([0,50])})
         .add(translateButton);
 
+    var footerFontSize=15;
+    //var footer=new View();
+    var details=[
+        'By Richard Kopelow<br>',
+        'This is super Alpha, needs much polish<br>',
+        'NLP done with <a href="https://github.com/nlp-compromise/nlp_compromise">nlp_compromise</a><br>',
+        'Layout powered by <a href="http://samsarajs.org/">SamsaraJS</a><br>',
+        'Base project generated with <a href="https://github.com/richardkopelow/generator-samsara">generator-samsara</a><br>',
+        'This is made by a fan made site, if you haven\'t read Mistborn by Brandon Sanderson you should.'
+    ];
+    var detailTransitions=[];
+    for (var i = 0; i < details.length; i++) {
+        var element = details[i];
+        detailTransitions[i]=new Transitionable(0);//((details.length-i)*footerFontSize);
+        var elementSurface=new Surface({
+            size: [undefined,footerFontSize+2],
+            origin: [1,0],
+            content: details[i],
+            properties: {
+                textAlign: 'right',
+                verticalAlign: 'middle',
+                lineHeight: footerFontSize+2+'px',
+                fontSize: footerFontSize+'px',
+                paddingRight: '30px'
+            }
+        });
+        context
+            .add({
+                align: [1,1],
+                transform: detailTransitions[i].map(function (index){return function(y){ //I know this is gross, I don't know how else I dhould deal with this
+                    return Transform.translateY(index*footerFontSize-y);
+                };}(i))
+            })
+            .add(elementSurface);
+    }
+    /*
     var footer=new Surface({
         size: [undefined,footerHeight],
-        content: 'By Richard Kopelow<br>'+
-                 'This is super Alpha, needs much polish<br>'+
-                 'NLP done with <a href="https://github.com/nlp-compromise/nlp_compromise">nlp_compromise</a><br>'+
-                 'Layout powered by <a href="http://samsarajs.org/">SamsaraJS</a><br>'+
-                 'Base project generated with <a href="https://github.com/richardkopelow/generator-samsara">generator-samsara</a><br>'+
-                 'This is made by a fan made site, if you haven\'t read Mistborn by Brandon Sanderson you should.',
         properties: {
             textAlign:'right',
             fontSize:'15px',
@@ -117,22 +150,24 @@ define(function (require, exports, module) {
             paddingRight:'30px'
         }
     });
+    */
 
     var layout = new HeaderFooterLayout({
         header: header,
-        footer: footer,
+        //footer: footer,
         content: content
     });
 
     //Fade in
     headerOpacity.set(1, {duration : 1000, curve : 'easeIn'},function(){
         textBoxOpacity.set(1, {duration : 1000, curve : 'easeIn'},function(){
-            highImperialOpacity.set(1, {duration : 1000, curve : 'easeIn'});
+            highImperialOpacity.set(1, {duration : 1000, curve : 'easeIn'},function(){
+                for (var i = 0; i < detailTransitions.length; i++) {
+                    detailTransitions[i].set(120,{duration : 1000+500*i, curve : 'easeOutCubic'});
+                }
+            });
         });
     });
-
-    // Create a Samsara Context as the root of the render tree
-    var context = new Context();
 
     context
         .add(layout);
