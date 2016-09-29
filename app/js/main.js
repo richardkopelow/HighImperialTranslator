@@ -52,8 +52,7 @@ define(function (require, exports, module) {
         }
     });
     content
-        .add({align:[0.5,0.5]})
-        .add({transform:Transform.translate([0,-window.innerHeight/4])})
+        .add({align:[0.5,0.25]})
         .add(highImperialSurface);
 
     function triggerTranslation(){
@@ -67,7 +66,7 @@ define(function (require, exports, module) {
     var textBoxOpacity=new Transitionable(0);
     var textBox=document.createElement('input');
     textBox.inputType='text';
-    textBox.setAttribute('style','width: 100%');
+    textBox.setAttribute('style','width: 100%; height: 100%');
     var textBoxSurface=new Surface({
         size: [300,30],
         origin: [0.5,0.5],
